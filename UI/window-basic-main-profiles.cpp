@@ -185,6 +185,10 @@ static bool CopyProfile(const char *fromPartial, const char *to)
 	return true;
 }
 
+bool OBSBasic::ProfileCreated(const char* name) {
+	return ProfileExists(name);
+}
+
 bool OBSBasic::AddProfile(bool create_new, const char *title, const char *text,
 			  const char *init_text, bool rename)
 {

@@ -233,6 +233,7 @@ private:
 	float previewScale = 0.0f;
 
 	ConfigFile basicConfig;
+	ConfigFile uncannyConfig;
 
 	std::vector<SavedProjectorInfo *> savedProjectorsArray;
 	std::vector<OBSProjector *> projectors;
@@ -305,7 +306,10 @@ private:
 
 	bool InitBasicConfigDefaults();
 	void InitBasicConfigDefaults2();
+	bool InitUncannyConfig();
+	bool InitUncannyScene();
 	bool InitBasicConfig();
+	bool InitStreamKey();
 
 	void InitOBSCallbacks();
 
@@ -357,6 +361,7 @@ private:
 
 	void LoadProfile();
 	void ResetProfileData();
+	bool ProfileCreated(const char *name);
 	bool AddProfile(bool create_new, const char *title, const char *text,
 			const char *init_text = nullptr, bool rename = false);
 	void DeleteProfile(const char *profile_name, const char *profile_dir);
