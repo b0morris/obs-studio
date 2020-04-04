@@ -310,6 +310,7 @@ private:
 	bool InitUncannyScene();
 	bool InitBasicConfig();
 	bool InitStreamKey();
+	void MixpanelEvent(const char *event, const char *key);
 
 	void InitOBSCallbacks();
 

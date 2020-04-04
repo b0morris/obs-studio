@@ -57,6 +57,7 @@
 #include "volume-control.hpp"
 #include "remote-text.hpp"
 #include "ui-validation.hpp"
+#include "http-request.hpp"
 #include <fstream>
 #include <sstream>
 
@@ -1394,8 +1395,8 @@ bool OBSBasic::InitUncannyConfig()
 	uncannyConfig.Open(filename, CONFIG_OPEN_ALWAYS);
 	config_set_string(uncannyConfig, "General", "Name", "Uncanny");
 
-	config_set_uint(uncannyConfig, "Video", "BaseCX", 1440);
-	config_set_uint(uncannyConfig, "Video", "BaseCY", 900);
+	config_set_uint(uncannyConfig, "Video", "BaseCX", 1920);
+	config_set_uint(uncannyConfig, "Video", "BaseCY", 1080);
 	config_set_uint(uncannyConfig, "Video", "OutputCX", 1280);
 	config_set_uint(uncannyConfig, "Video", "OutputCY", 720);
 
@@ -1634,6 +1635,8 @@ bool OBSBasic::InitStreamKey(){
 		obs_data_t *service_data = obs_data_create_from_json(service.c_str());
 		obs_data_save_json(service_data, filename);
 
+		MixpanelEvent("OBS-streamKeyEntered", name.c_str());
+
 		QAction *action = new QAction(QT_UTF8("Uncanny"), this);
 		action->setProperty("file_name", QT_UTF8(path));
 		connect(action, &QAction::triggered, this,
@@ -1642,6 +1645,15 @@ bool OBSBasic::InitStreamKey(){
 	}
 
 	return true;
+}
+
+void OBSBasic::MixpanelEvent(const char *event, const char *key) {
+	std::string url = "http://aux.uncanny.gg/misc/mixpanel?name=" +
+			  std::string(event);
+	if (key)
+		url += "&key=" + std::string(key);
+	http::Request request(url);
+	const http::Response res = request.send("GET");
 }
 
 bool OBSBasic::InitBasicConfig()
@@ -2068,6 +2080,8 @@ void OBSBasic::OBSInit()
 				this, QTStr("Basic.AutoConfig"), msg);
 		}
 		*/
+
+		MixpanelEvent("OBS-firstRun", nullptr);
 	}
 
 
