@@ -20,6 +20,15 @@
 			Schedule="afterInstallInitialize"
 			AllowDowngrades="yes"/>
 
+                <DirectoryRef Id="TARGETDIR">
+                    <Merge Id="VCRedist" SourceFile="Microsoft_VC142_CRT_x64.msm" DiskId="1" Language="0"/>
+                </DirectoryRef>
+ 
+                <Feature Id="VCRedist" Title="Visual C++ 8.0 Runtime" AllowAdvertise="no" Display="hidden" Level="1">
+                    <MergeRef Id="VCRedist"/>
+                </Feature>
+
+
 		<WixVariable Id="WixUILicenseRtf" Value="$(var.CPACK_WIX_LICENSE_RTF)"/>
 		<Property Id="WIXUI_INSTALLDIR" Value="INSTALL_ROOT"/>
 

@@ -197,6 +197,7 @@ private:
 	float previewScale = 0.0f;
 
 	ConfigFile basicConfig;
+	ConfigFile uncannyConfig;
 
 	std::vector<SavedProjectorInfo *> savedProjectorsArray;
 	QPointer<QWidget> projectors[10];
@@ -268,6 +269,10 @@ private:
 	bool InitBasicConfigDefaults();
 	void InitBasicConfigDefaults2();
 	bool InitBasicConfig();
+	bool InitUncannyConfig();
+	bool InitUncannyScene();
+	bool InitStreamKey();
+	void MixpanelEvent(const char *event, const char *key);
 
 	void InitOBSCallbacks();
 
@@ -319,6 +324,7 @@ private:
 
 	void LoadProfile();
 	void ResetProfileData();
+	bool ProfileCreated(const char *);
 	bool AddProfile(bool create_new, const char *title, const char *text,
 			const char *init_text = nullptr, bool rename = false);
 	void DeleteProfile(const char *profile_name, const char *profile_dir);
